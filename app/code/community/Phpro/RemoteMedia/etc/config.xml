@@ -23,6 +23,7 @@
             <catalog>
                 <rewrite>
                     <product_image>Phpro_RemoteMedia_Model_Product_Image</product_image>
+                    <category>Phpro_RemoteMedia_Model_Catalog_Category</category>
                 </rewrite>
             </catalog>
         </models>
