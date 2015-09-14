@@ -36,33 +36,41 @@ class Phpro_RemoteMedia_Helper_Data extends Mage_Core_Helper_Abstract
      * @param $filename
      * @return bool
      */
-    public function fetchRemoteProductionImage($filename)
+    public function fetchRemoteProductionImage($filename, $pathPrefix = '/catalog/product')
     {
-        if(!$this->getRemoteMediaEnabled() || $this->getProductionMediaUrl() == '' || $filename == '') {
+        if(!$this->getRemoteMediaEnabled() || $this->getProductionMediaUrl() == '' || $filename == '')
+        {
             return false;
         }
 
-        $relativeFilePath = '/catalog/product' . $filename;
+        $relativeFilePath = $pathPrefix . $filename;
 
         $productionMediaUrl = rtrim($this->getProductionMediaUrl(), '/') . $relativeFilePath;
-        $targetMediaFilePath = Mage::getBaseDir('media').$relativeFilePath;
-        
-        if (is_file($targetMediaFilePath)) {
+        $targetMediaFilePath = Mage::getBaseDir('media') . $relativeFilePath;
+
+        if(is_file($targetMediaFilePath))
+        {
             return $filename;
         }
 
-        try {
+        try
+        {
             $mediaFile = file_get_contents($productionMediaUrl);
 
-            if($mediaFile) {
+            if($mediaFile)
+            {
                 $this->writeMediaFile($targetMediaFilePath, $mediaFile);
-            } else {
+            } else
+            {
                 return false;
             }
 
-        } catch(Exception $e) {
-            Mage::log("Unable to fetch and store remote production image: ".$e->getMessage());
+        }
+        catch(Exception $e)
+        {
+            Mage::log("Unable to fetch and store remote production image: " . $e->getMessage());
             Mage::log($filename);
+
             return false;
         }
 
@@ -85,12 +93,15 @@ class Phpro_RemoteMedia_Helper_Data extends Mage_Core_Helper_Abstract
         $file->checkAndCreateFolder($targetDir);
         $file->cd($targetDir);
 
-        try {
+        try
+        {
             $file->streamOpen($target);
             $file->streamWrite($source);
             $file->streamClose();
-        }catch(Exception $e) {
-            throw new Exception('Unable to write media file '.$e->getMessage());
+        }
+        catch(Exception $e)
+        {
+            throw new Exception('Unable to write media file ' . $e->getMessage());
         }
 
         return true;

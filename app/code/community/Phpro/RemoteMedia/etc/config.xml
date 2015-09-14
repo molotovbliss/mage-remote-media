@@ -10,6 +10,11 @@
             <phpro_remotemedia>
                 <class>Phpro_RemoteMedia_Helper</class>
             </phpro_remotemedia>
+            <flexslider>
+                <rewrite>
+                    <image>Phpro_RemoteMedia_Helper_Flexslider_Image</image>
+                </rewrite>
+            </flexslider>
         </helpers>
         <models>
             <phpro_remotemedia>
