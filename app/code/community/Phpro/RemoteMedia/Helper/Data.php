@@ -40,7 +40,7 @@ class Phpro_RemoteMedia_Helper_Data extends Mage_Core_Helper_Abstract
     {
         if(!$this->getRemoteMediaEnabled() || $this->getProductionMediaUrl() == '' || $filename == '')
         {
-            return false;
+            return $filename;
         }
 
         $relativeFilePath = $pathPrefix . $filename;
